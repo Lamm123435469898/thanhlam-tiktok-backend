@@ -206,7 +206,7 @@ def upload():
 def logout():
     session.clear()
     return redirect("/")
-@app.route("/tiktok0SD9i62QN62ISBamXiRCdX1u3oN4i2Hh")
+@app.route("/tiktok0SD9i62QN62ISBamXiRCdX1u3oN4i2Hh.txt")
 def tiktok_verify():
     return "tiktok-developers-site-verification=0SD9i62QN62ISBamXiRCdX1u3oN4i2Hh", 200, {"Content-Type": "text/plain"}
 
