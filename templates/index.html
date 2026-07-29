@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>ThanhLam Video Publisher</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container py-5" style="max-width: 560px;">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h4 class="mb-4 text-center">ThanhLam Video Publisher</h4>
+
+                {% if not user_info %}
+                    <p class="text-muted text-center">Đăng nhập bằng tài khoản TikTok để đăng video.</p>
+                    <div class="d-grid">
+                        <a href="/login" class="btn btn-dark btn-lg">
+                            Login with TikTok
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="d-flex align-items-center mb-4 p-2 border rounded">
+                        {% if user_info.avatar_url %}
+                        <img src="{{ user_info.avatar_url }}" width="48" height="48"
+                             class="rounded-circle me-3" alt="avatar">
+                        {% endif %}
+                        <div>
+                            <strong>{{ user_info.display_name or "TikTok User" }}</strong><br>
+                            <a href="/logout" class="small text-muted">Đăng xuất</a>
+                        </div>
+                        <span class="badge bg-success ms-auto">✓ Đã đăng nhập</span>
+                    </div>
+
+                    <hr>
+
+                    <form method="post" action="/upload" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label class="form-label">Chọn video (.mp4)</label>
+                            <input type="file" name="video" accept="video/mp4" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Caption</label>
+                            <input type="text" name="caption" class="form-control" placeholder="Nhập caption..." required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Privacy</label>
+                            <select class="form-select" disabled>
+                                <option selected>Self Only (chế độ demo)</option>
+                            </select>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Upload Video</button>
+                        </div>
+                    </form>
+
+                    {% if error %}
+                    <div class="alert alert-danger mt-3">{{ error }}</div>
+                    {% endif %}
+
+                    {% if result %}
+                        <hr>
+                        <h6>Upload Result</h6>
+                        {% if result.success %}
+                            <div class="alert alert-success">✓ Upload successful</div>
+                        {% else %}
+                            <div class="alert alert-warning">Upload chưa thành công, xem chi tiết bên dưới.</div>
+                        {% endif %}
+                        <pre class="bg-dark text-light p-2 rounded small">{{ result }}</pre>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
